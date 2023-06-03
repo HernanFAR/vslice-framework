@@ -1,0 +1,41 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, Hernán Álvarez
+# This file is distributed under the same license as the VSlices package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: VSlices \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-31 01:08-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: ../../source/index.md:1
+msgid "Auxilio"
+msgstr "Help"
+
+#: ../../source/index.md:3
+msgid "Esto es un ejemplo, ya que necesito entender como funciona la traducción"
+msgstr "This is an example, because I need to understand how the translation works"
+
+#: ../../source/index.md:5
+msgid "Necesito ayuda"
+msgstr "I need help"
+
+#: ../../source/index.md:7
+msgid "No puedo controlar mi vida"
+msgstr "I can't control my own life"
+
+#: ../../source/index.md:9
+msgid "Creo que nunca tuve control de ella"
+msgstr "I think I never has contorl over it"
+
