@@ -25,7 +25,29 @@ public class FluentValidationBehaviorTests
         validatorMock.Setup(e => e.ValidateAsync(request, default))
             .Returns(Task.FromResult(new ValidationResult()));
 
-        var validationBehaviorMock = new Mock<FluentValidationBehavior<Request, Success>>(new List<IValidator<Request>> { validator });
+        var validationBehaviorMock = new Mock<FluentValidationBehavior<Request, Success>>(new List<IValidator<Request>> { validator })
+        {
+            CallBase = true
+        };
+        var validationBehavior = validationBehaviorMock.Object;
+
+        var handlerResponse = await validationBehavior.HandleAsync(request, async () => response);
+
+        handlerResponse.IsT0.Should().BeTrue();
+        handlerResponse.AsT0.Should().Be(response);
+
+    }
+
+    [Fact]
+    public async Task HandleAsync_ShouldReturnSuccess_DetailDueToRequest()
+    {
+        var request = new Request();
+        var response = new Success();
+
+        var validationBehaviorMock = new Mock<FluentValidationBehavior<Request, Success>>(new List<IValidator<Request>>())
+        {
+            CallBase = true
+        };
         var validationBehavior = validationBehaviorMock.Object;
 
         var handlerResponse = await validationBehavior.HandleAsync(request, async () => response);
@@ -47,7 +69,10 @@ public class FluentValidationBehaviorTests
         validatorMock.Setup(e => e.ValidateAsync(request, default))
             .Returns(Task.FromResult(new ValidationResult(new []{ new ValidationFailure("", expMessage) })));
 
-        var validationBehaviorMock = new Mock<FluentValidationBehavior<Request, Success>>(new List<IValidator<Request>> { validator }) { CallBase = true};
+        var validationBehaviorMock = new Mock<FluentValidationBehavior<Request, Success>>(new List<IValidator<Request>> { validator })
+        {
+            CallBase = true
+        };
         var validationBehavior = validationBehaviorMock.Object;
 
         var handlerResponse = await validationBehavior.HandleAsync(request, async () => throw new Exception());

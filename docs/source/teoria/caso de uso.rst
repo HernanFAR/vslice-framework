@@ -1,5 +1,5 @@
-¿Cómo son los casos de uso?
-========================
+¿Qué son los casos de uso en VSlices?
+=====================================
 
 Descripción de que es
 ---------------------

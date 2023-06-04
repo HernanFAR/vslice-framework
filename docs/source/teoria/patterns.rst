@@ -1,8 +1,8 @@
-¿Que es el "Pipeline" del caso de uso?
+¿Que son los patrones CQRS y Mediator?
 ======================================
 
 Descripción de que es
 ---------------------
 
-JAJ pipeo
+JAJ cquliao
 

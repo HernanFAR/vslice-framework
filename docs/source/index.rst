@@ -52,10 +52,10 @@ De verdad, muchas gracias por el apoyo :)
 	:hidden:
 	:caption: Profundizando en la teoria 
 	
+	./teoria/caso de uso
 	./teoria/vertical slices
 	./teoria/cross cutting
-	./teoria/cqrs
-	./teoria/caso de uso
+	./teoria/patterns
 	./teoria/pipeline
 		
 .. toctree::
@@ -63,7 +63,16 @@ De verdad, muchas gracias por el apoyo :)
 	:hidden: 
 	:caption: Funcionalidades
 	 
-	./funcionalidades/funcionalidades
+	./funcionalidades/sender
+	./funcionalidades/requests
+	./funcionalidades/handlers
+	./funcionalidades/create handlers
+	./funcionalidades/update handlers
+	./funcionalidades/remove handlers
+	./funcionalidades/data access
+	./funcionalidades/entityframework
+	./funcionalidades/pipeline behaviors
+	./funcionalidades/validation behavior
 		
 .. toctree::
 	:maxdepth: 2
