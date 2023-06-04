@@ -15,8 +15,8 @@ namespace VSlices.Core.BusinessLogic.FluentValidation.UnitTests.UpdateHandlers;
 public class DomainFluentValidatedRemoveHandler_ThreeGenerics
 {
     public record Domain;
-    public record Request : ICommand;
     public record Response;
+    public record Request : ICommand<Response>;
 
     public class EntityFluentValidatedUpdateHandler : EntityFluentValidatedUpdateHandler<Request, Response, Domain>
     {

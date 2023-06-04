@@ -7,7 +7,7 @@ using VSlices.Core.Abstracts.Responses;
 namespace VSlices.Core.BusinessLogic;
 
 public abstract class ReadHandler<TRequest, TSearchOptions, TResponse> : IHandler<TRequest, TResponse>
-    where TRequest : IQuery
+    where TRequest : IQuery<TResponse>
 {
     private readonly IReadRepository<TResponse, TSearchOptions> _repository;
 
@@ -36,7 +36,7 @@ public abstract class ReadHandler<TRequest, TSearchOptions, TResponse> : IHandle
 }
 
 public abstract class ReadHandler<TRequest, TResponse> : IHandler<TRequest, TResponse>
-    where TRequest : IQuery
+    where TRequest : IQuery<TResponse>
 {
     private readonly IReadRepository<TResponse, TRequest> _repository;
 
@@ -61,7 +61,7 @@ public abstract class ReadHandler<TRequest, TResponse> : IHandler<TRequest, TRes
 }
 
 public abstract class BasicReadHandler<TRequest, TResponse> : IHandler<TRequest, TResponse>
-    where TRequest : IQuery
+    where TRequest : IQuery<TResponse>
 {
     private readonly IReadRepository<TResponse> _repository;
 
@@ -81,112 +81,6 @@ public abstract class BasicReadHandler<TRequest, TResponse> : IHandler<TRequest,
 
         return await _repository.ReadAsync(cancellationToken);
     }
-
-    protected internal abstract ValueTask<OneOf<Success, BusinessFailure>> ValidateUseCaseRulesAsync(TRequest request, CancellationToken cancellationToken = default);
-}
-
-public abstract class RequestValidatedReadHandler<TRequest, TSearchOptions, TResponse> : IHandler<TRequest, TResponse>
-    where TRequest : IQuery
-{
-    private readonly IReadRepository<TResponse, TSearchOptions> _repository;
-
-    protected RequestValidatedReadHandler(IReadRepository<TResponse, TSearchOptions> repository)
-    {
-        _repository = repository;
-    }
-
-    public virtual async ValueTask<OneOf<TResponse, BusinessFailure>> HandleAsync(TRequest request, CancellationToken cancellationToken = default)
-    {
-        var requestValidationResult = await ValidateRequestAsync(request, cancellationToken);
-
-        if (requestValidationResult.IsT1)
-        {
-            return requestValidationResult.AsT1;
-        }
-
-        var useCaseValidationResult = await ValidateUseCaseRulesAsync(request, cancellationToken);
-
-        if (useCaseValidationResult.IsT1)
-        {
-            return useCaseValidationResult.AsT1;
-        }
-
-        var options = await RequestToSearchOptionsAsync(request, cancellationToken);
-
-        return await _repository.ReadAsync(options, cancellationToken);
-    }
-
-    protected internal abstract ValueTask<OneOf<Success, BusinessFailure>> ValidateRequestAsync(TRequest request, CancellationToken cancellationToken = default);
-
-    protected internal abstract ValueTask<OneOf<Success, BusinessFailure>> ValidateUseCaseRulesAsync(TRequest request, CancellationToken cancellationToken = default);
-
-    protected internal abstract ValueTask<TSearchOptions> RequestToSearchOptionsAsync(TRequest request, CancellationToken cancellationToken = default);
-}
-
-public abstract class RequestValidatedReadHandler<TRequest, TResponse> : IHandler<TRequest, TResponse>
-    where TRequest : IQuery
-{
-    private readonly IReadRepository<TResponse, TRequest> _repository;
-
-    protected RequestValidatedReadHandler(IReadRepository<TResponse, TRequest> repository)
-    {
-        _repository = repository;
-    }
-
-    public virtual async ValueTask<OneOf<TResponse, BusinessFailure>> HandleAsync(TRequest request, CancellationToken cancellationToken = default)
-    {
-        var requestValidationResult = await ValidateRequestAsync(request, cancellationToken);
-
-        if (requestValidationResult.IsT1)
-        {
-            return requestValidationResult.AsT1;
-        }
-
-        var useCaseValidationResult = await ValidateUseCaseRulesAsync(request, cancellationToken);
-
-        if (useCaseValidationResult.IsT1)
-        {
-            return useCaseValidationResult.AsT1;
-        }
-
-        return await _repository.ReadAsync(request, cancellationToken);
-    }
-
-    protected internal abstract ValueTask<OneOf<Success, BusinessFailure>> ValidateRequestAsync(TRequest request, CancellationToken cancellationToken = default);
-
-    protected internal abstract ValueTask<OneOf<Success, BusinessFailure>> ValidateUseCaseRulesAsync(TRequest request, CancellationToken cancellationToken = default);
-}
-
-public abstract class RequestValidatedBasicReadHandler<TRequest, TResponse> : IHandler<TRequest, TResponse>
-    where TRequest : IQuery
-{
-    private readonly IReadRepository<TResponse> _repository;
-
-    protected RequestValidatedBasicReadHandler(IReadRepository<TResponse> repository)
-    {
-        _repository = repository;
-    }
-
-    public virtual async ValueTask<OneOf<TResponse, BusinessFailure>> HandleAsync(TRequest request, CancellationToken cancellationToken = default)
-    {
-        var requestValidationResult = await ValidateRequestAsync(request, cancellationToken);
-
-        if (requestValidationResult.IsT1)
-        {
-            return requestValidationResult.AsT1;
-        }
-
-        var useCaseValidationResult = await ValidateUseCaseRulesAsync(request, cancellationToken);
-
-        if (useCaseValidationResult.IsT1)
-        {
-            return useCaseValidationResult.AsT1;
-        }
-
-        return await _repository.ReadAsync(cancellationToken);
-    }
-
-    protected internal abstract ValueTask<OneOf<Success, BusinessFailure>> ValidateRequestAsync(TRequest request, CancellationToken cancellationToken = default);
 
     protected internal abstract ValueTask<OneOf<Success, BusinessFailure>> ValidateUseCaseRulesAsync(TRequest request, CancellationToken cancellationToken = default);
 }

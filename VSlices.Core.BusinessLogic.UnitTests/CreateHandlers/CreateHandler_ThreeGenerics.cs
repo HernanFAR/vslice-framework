@@ -11,7 +11,7 @@ public class CreateHandler_ThreeGenerics
 {
     public record Domain;
     public record Response;
-    public record Request : ICommand;
+    public record Request : ICommand<Response>;
 
     private readonly Mock<ICreateRepository<Domain>> _mockedRepository;
     private readonly Mock<CreateHandler<Request, Response, Domain>> _mockedHandler;

@@ -14,12 +14,12 @@ public class DomainValidatedUpdateHandler_TwoGenerics
     public record Request : ICommand;
 
     private readonly Mock<IUpdateRepository<Domain>> _mockedRepository;
-    private readonly Mock<DomainValidatedUpdateHandler<Request, Domain>> _mockedHandler;
+    private readonly Mock<EntityValidatedUpdateHandler<Request, Domain>> _mockedHandler;
 
     public DomainValidatedUpdateHandler_TwoGenerics()
     {
         _mockedRepository = new Mock<IUpdateRepository<Domain>>();
-        _mockedHandler = new Mock<DomainValidatedUpdateHandler<Request, Domain>>(_mockedRepository.Object);
+        _mockedHandler = new Mock<EntityValidatedUpdateHandler<Request, Domain>>(_mockedRepository.Object);
     }
 
     [Fact]

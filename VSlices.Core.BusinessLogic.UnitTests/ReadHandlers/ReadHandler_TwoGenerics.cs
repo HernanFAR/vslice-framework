@@ -11,7 +11,7 @@ namespace VSlices.Core.BusinessLogic.UnitTests.ReadHandlers;
 
 public class ReadHandler_TwoGenerics
 {
-    public record Request : IQuery;
+    public record Request : IQuery<Response>;
     public record Response;
 
     private readonly Mock<IReadRepository<Response, Request>> _mockedRepository;

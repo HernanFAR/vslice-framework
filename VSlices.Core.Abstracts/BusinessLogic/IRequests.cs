@@ -1,7 +1,13 @@
-﻿namespace VSlices.Core.Abstracts.BusinessLogic;
+﻿using OneOf.Types;
 
-public interface IRequest { }
+namespace VSlices.Core.Abstracts.BusinessLogic;
 
-public interface ICommand : IRequest { }
+public interface IRequest<TResponse> { }
 
-public interface IQuery : IRequest { }
+public interface ICommand<TResponse> : IRequest<TResponse> { }
+
+public interface ICommand : ICommand<Success> { }
+
+public interface IQuery<TResponse> : IRequest<TResponse> { }
+
+public interface IQuery : IQuery<Success> { }

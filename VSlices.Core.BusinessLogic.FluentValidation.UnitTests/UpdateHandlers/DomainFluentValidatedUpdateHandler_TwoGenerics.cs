@@ -17,9 +17,9 @@ public class DomainFluentValidatedRemoveHandler_TwoGenerics
     public record Domain;
     public record Request: ICommand;
 
-    public class DomainFluentValidatedUpdateHandler : DomainFluentValidatedUpdateHandler<Request, Domain>
+    public class EntityFluentValidatedUpdateHandler : EntityFluentValidatedUpdateHandler<Request, Domain>
     {
-        public DomainFluentValidatedUpdateHandler(IValidator<Domain> requestValidator, IUpdateRepository<Domain> repository) : base(requestValidator, repository) { }
+        public EntityFluentValidatedUpdateHandler(IValidator<Domain> requestValidator, IUpdateRepository<Domain> repository) : base(requestValidator, repository) { }
 
         protected override ValueTask<OneOf<Success, BusinessFailure>> ValidateUseCaseRulesAsync(Request request, CancellationToken cancellationToken = default) 
             => ValueTask.FromResult<OneOf<Success, BusinessFailure>>(new Success());
@@ -31,13 +31,13 @@ public class DomainFluentValidatedRemoveHandler_TwoGenerics
 
     private readonly Mock<IValidator<Domain>> _mockedValidator;
     private readonly Mock<IUpdateRepository<Domain>> _mockedRepository;
-    private readonly DomainFluentValidatedUpdateHandler _handler;
+    private readonly EntityFluentValidatedUpdateHandler _handler;
 
     public DomainFluentValidatedRemoveHandler_TwoGenerics()
     {
         _mockedValidator = new Mock<IValidator<Domain>>();
         _mockedRepository = new Mock<IUpdateRepository<Domain>>();
-        _handler = new DomainFluentValidatedUpdateHandler(_mockedValidator.Object, _mockedRepository.Object);
+        _handler = new EntityFluentValidatedUpdateHandler(_mockedValidator.Object, _mockedRepository.Object);
     }
 
     [Fact]

@@ -11,7 +11,7 @@ public class DomainValidatedUpdateHandler_ThreeGenerics
 {
     public record Domain;
     public record Response;
-    public record Request : ICommand;
+    public record Request : ICommand<Response>;
 
     private readonly Mock<IUpdateRepository<Domain>> _mockedRepository;
     private readonly Mock<EntityValidatedUpdateHandler<Request, Response, Domain>> _mockedHandler;
