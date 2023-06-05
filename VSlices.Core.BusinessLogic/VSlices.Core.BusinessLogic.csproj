@@ -5,7 +5,22 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Enryu20</Authors>
+    <Product>VSlices</Product>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Description>Framework web de alto nivel C#, fuertemente inspirado en la arquitectura "Vertical Slices", MediatR y la programación funcional</Description>
+    <Copyright>MIT</Copyright>
+    <PackageProjectUrl>https://vslice-framework.readthedocs.io/es/latest/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/HernanFAR/vslice-framework</RepositoryUrl>
+    <PackageTags>vertical slices;mediator;cqrs;repository;request;handler;</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\VSlices.Core.Abstracts\VSlices.Core.Abstracts.csproj" />
