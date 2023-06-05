@@ -75,7 +75,7 @@ public class OneOfExtensionsTests
     [Fact]
     public void MatchEndpointResult_ShouldCallReturnUnprocessableEntity_DetailWithErrors()
     {
-        OneOf<Success, BusinessFailure> oneOf = BusinessFailure.Of.Validation(new []{ "XD" });
+        OneOf<Success, BusinessFailure> oneOf = BusinessFailure.Of.ContractValidation(new []{ "XD" });
 
         var result = oneOf.MatchEndpointResult(_ => TypedResults.Ok());
 
@@ -86,7 +86,29 @@ public class OneOfExtensionsTests
     [Fact]
     public void MatchEndpointResult_ShouldCallReturnUnprocessableEntity_DetailWithError()
     {
-        OneOf<Success, BusinessFailure> oneOf = BusinessFailure.Of.Validation("XD");
+        OneOf<Success, BusinessFailure> oneOf = BusinessFailure.Of.ContractValidation("XD");
+
+        var result = oneOf.MatchEndpointResult(_ => TypedResults.Ok());
+
+        result.Should().BeOfType<UnprocessableEntity<string[]>>();
+
+    }
+
+    [Fact]
+    public void MatchEndpointResult_ShouldCallReturnUnprocessableEntity_DetailWithErrorsAndDomainValidation()
+    {
+        OneOf<Success, BusinessFailure> oneOf = BusinessFailure.Of.DomainValidation(new []{ "XD" });
+
+        var result = oneOf.MatchEndpointResult(_ => TypedResults.Ok());
+
+        result.Should().BeOfType<UnprocessableEntity<string[]>>();
+
+    }
+
+    [Fact]
+    public void MatchEndpointResult_ShouldCallReturnUnprocessableEntity_DetailWithErrorAndDomainValidation()
+    {
+        OneOf<Success, BusinessFailure> oneOf = BusinessFailure.Of.DomainValidation("XD");
 
         var result = oneOf.MatchEndpointResult(_ => TypedResults.Ok());
 

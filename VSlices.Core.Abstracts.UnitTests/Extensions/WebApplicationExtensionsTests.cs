@@ -28,7 +28,7 @@ public class WebApplicationExtensionsTests
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            GC.SuppressFinalize(this);
         }
 
         public Task StartAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -85,7 +85,9 @@ public class WebApplicationExtensionsTests
 
         var dataSources = webAppDummy.DataSources.First();
 
-        var addedEndpoint = (RouteEndpoint)dataSources.Endpoints.First();
+        var addedEndpoint = (RouteEndpoint)dataSources.Endpoints[0];
+
+        if (addedEndpoint.RequestDelegate is null) throw new ArgumentNullException(nameof(addedEndpoint.RequestDelegate));
 
         addedEndpoint.RequestDelegate.Method.Should().BeSameAs(typeof(Endpoint).GetMethod(nameof(Endpoint.Test)));
         addedEndpoint.RoutePattern.RawText.Should().Be(Endpoint.ApiRoute);

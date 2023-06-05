@@ -31,6 +31,6 @@ public class FluentValidationBehavior<TRequest, TResponse> : AbstractValidationB
             .Errors.Select(e => e.ErrorMessage)
             .ToArray();
 
-        return BusinessFailure.Of.Validation(errors);
+        return BusinessFailure.Of.ContractValidation(errors);
     }
 }

@@ -21,9 +21,11 @@ public class AbstractValidationBehaviorTests
         var response = new Success();
 
         validationBehaviorMock.Setup(e => e.ValidateAsync(request, default))
-            .Returns(ValueTask.FromResult<OneOf<Success, BusinessFailure>>(response));
+            .ReturnsAsync(OneOf<Success, BusinessFailure>.FromT0(response));
 
-        var handlerResponse = await validationBehavior.HandleAsync(request, async () => response);
+        var handlerResponse = await validationBehavior.HandleAsync(
+            request, 
+            () => ValueTask.FromResult<OneOf<Success, BusinessFailure>>(response));
 
         handlerResponse.IsT0.Should().BeTrue();
         handlerResponse.AsT0.Should().Be(response);
@@ -37,12 +39,12 @@ public class AbstractValidationBehaviorTests
         var validationBehaviorMock = Mock.Get(validationBehavior);
 
         var request = new Request();
-        var response = BusinessFailure.Of.Validation("Error de ejemplo");
+        var response = BusinessFailure.Of.ContractValidation("Error de ejemplo");
 
         validationBehaviorMock.Setup(e => e.ValidateAsync(request, default))
-            .Returns(ValueTask.FromResult<OneOf<Success, BusinessFailure>>(response));
+            .ReturnsAsync(OneOf<Success, BusinessFailure>.FromT1(response));
 
-        var handlerResponse = await validationBehavior.HandleAsync(request, async () => throw new Exception());
+        var handlerResponse = await validationBehavior.HandleAsync(request, () => throw new Exception());
 
         handlerResponse.IsT1.Should().BeTrue();
         handlerResponse.AsT1.Should().Be(response);

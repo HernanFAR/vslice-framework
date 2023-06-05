@@ -14,13 +14,13 @@ public class SenderTests
 {
     public class Acumulator
     {
-        public static string Str = "";
+        public static string Str { get; set; } = "";
     }
 
     public class PipelineBehaviorOne<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
         where TRequest : IRequest<TResponse>
     {
-        public static int Count;
+        public static int Count { get; set; }
 
         public ValueTask<OneOf<TResponse, BusinessFailure>> HandleAsync(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken = default)
         {
@@ -34,7 +34,7 @@ public class SenderTests
     public class PipelineBehaviorTwo<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
         where TRequest : IRequest<TResponse>
     {
-        public static int Count;
+        public static int Count { get; set; }
 
         public ValueTask<OneOf<TResponse, BusinessFailure>> HandleAsync(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken = default)
         {
@@ -47,7 +47,7 @@ public class SenderTests
 
     public class ConcretePipelineBehaviorOne : IPipelineBehavior<RequestOne, Success> 
     {
-        public static int Count;
+        public static int Count { get; set; }
 
         public ValueTask<OneOf<Success, BusinessFailure>> HandleAsync(RequestOne request, RequestHandlerDelegate<Success> next, CancellationToken cancellationToken = default)
         {
@@ -62,14 +62,14 @@ public class SenderTests
 
     public class HandlerOne : IHandler<RequestOne, Success>
     {
-        public static int Count;
+        public static int Count { get; set; }
 
-        public async ValueTask<OneOf<Success, BusinessFailure>> HandleAsync(RequestOne requestOne, CancellationToken cancellationToken = default)
+        public ValueTask<OneOf<Success, BusinessFailure>> HandleAsync(RequestOne requestOne, CancellationToken cancellationToken = default)
         {
             Count += 1;
             Acumulator.Str += "HandlerOne_";
 
-            return new Success();
+            return ValueTask.FromResult<OneOf<Success, BusinessFailure>>(new Success());
         }
     }
 
@@ -77,14 +77,14 @@ public class SenderTests
 
     public class HandlerTwo : IHandler<RequestTwo, Success>
     {
-        public static int Count;
+        public static int Count { get; set; }
 
-        public async ValueTask<OneOf<Success, BusinessFailure>> HandleAsync(RequestTwo request, CancellationToken cancellationToken = default)
+        public ValueTask<OneOf<Success, BusinessFailure>> HandleAsync(RequestTwo request, CancellationToken cancellationToken = default)
         {
             Count += 1;
             Acumulator.Str += "HandlerTwo_";
 
-            return new Success();
+            return ValueTask.FromResult<OneOf<Success, BusinessFailure>>(new Success());
         }
     }
 

@@ -27,7 +27,7 @@ public abstract class EntityFluentValidatedCreateHandler<TRequest, TResponse, TE
             .Errors.Select(e => e.ErrorMessage)
             .ToArray();
 
-        return BusinessFailure.Of.Validation(errors);
+        return BusinessFailure.Of.DomainValidation(errors);
     }
 }
 
@@ -51,6 +51,6 @@ public abstract class EntityFluentValidatedCreateHandler<TRequest, TEntity> : En
             .Errors.Select(e => e.ErrorMessage)
             .ToArray();
 
-        return BusinessFailure.Of.Validation(errors);
+        return BusinessFailure.Of.DomainValidation(errors);
     }
 }

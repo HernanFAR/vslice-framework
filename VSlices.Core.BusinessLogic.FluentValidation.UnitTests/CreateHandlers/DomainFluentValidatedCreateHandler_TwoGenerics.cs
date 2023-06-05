@@ -62,7 +62,7 @@ public class DomainFluentValidatedUpdateHandler_TwoGenerics
         handlerResponse.AsT1
             .Errors.Should().ContainSingle(e => e == validationFailureString);
         handlerResponse.AsT1
-            .Kind.Should().Be(FailureKind.Validation);
+            .Kind.Should().Be(FailureKind.DomainValidation);
 
         _mockedValidator.Verify();
         _mockedValidator.VerifyNoOtherCalls();

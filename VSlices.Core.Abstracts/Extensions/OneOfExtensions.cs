@@ -18,7 +18,8 @@ public static class OneOfExtensions
                     FailureKind.UserNotAllowed => TypedResults.Forbid(),
                     FailureKind.NotFoundResource => e.Errors.Any() ? TypedResults.NotFound(e.Errors) : TypedResults.NotFound(),
                     FailureKind.ConcurrencyError => e.Errors.Any() ? TypedResults.Conflict(e.Errors) : TypedResults.Conflict(),
-                    FailureKind.Validation => TypedResults.UnprocessableEntity(e.Errors),
+                    FailureKind.ContractValidation => TypedResults.UnprocessableEntity(e.Errors),
+                    FailureKind.DomainValidation => TypedResults.UnprocessableEntity(e.Errors),
                     _ => throw new ArgumentOutOfRangeException(nameof(e.Kind), "A not valid FailureKind value was returned")
                 };
             });
